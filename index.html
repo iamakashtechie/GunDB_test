@@ -1,93 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Decentralized Task App (GunDB)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Decentralized Task App (GunDB)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- GunDB CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <!-- GunDB CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
 
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      padding: 20px;
-    }
-    h1 { margin-bottom: 10px; }
-    input {
-      padding: 8px;
-      width: 70%;
-    }
-    button {
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-    ul {
-      margin-top: 20px;
-      padding: 0;
-      list-style: none;
-    }
-    li {
-      background: #1e293b;
-      margin-bottom: 8px;
-      padding: 8px;
-      border-radius: 6px;
-      display: flex;
-      justify-content: space-between;
-    }
-  </style>
-</head>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0f172a;
+        color: #e5e7eb;
+        padding: 20px;
+      }
+      h1 {
+        margin-bottom: 10px;
+      }
+      input {
+        padding: 8px;
+        width: 70%;
+      }
+      button {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      ul {
+        margin-top: 20px;
+        padding: 0;
+        list-style: none;
+      }
+      li {
+        background: #1e293b;
+        margin-bottom: 8px;
+        padding: 8px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
 
-<body>
-  <h1>🧩 Decentralized Tasks</h1>
+  <body>
+    <h1>🧩 Decentralized Tasks</h1>
 
-  <input id="taskInput" placeholder="New task..." />
-  <button onclick="addTask()">Add</button>
+    <input id="taskInput" placeholder="New task..." />
+    <button onclick="addTask()">Add</button>
 
-  <ul id="taskList"></ul>
+    <ul id="taskList"></ul>
 
-  <script>
-    // 1️⃣ Initialize Gun (no server needed)
-    const gun = Gun();
-
-    // 2️⃣ Create a shared tasks node
-    const tasks = gun.get("tasks");
-
-    const taskList = document.getElementById("taskList");
-    const input = document.getElementById("taskInput");
-
-    // 3️⃣ Add task
-    function addTask() {
-      if (!input.value.trim()) return;
-
-      tasks.set({
-        text: input.value,
-        createdAt: Date.now()
+    <script>
+      // 1️⃣ Initialize Gun
+      const gun = Gun({
+        peers: ["http://localhost:8765/gun"],
       });
 
-      input.value = "";
-    }
+      // 2️⃣ Create a shared tasks node
+      const tasks = gun.get("tasks");
 
-    // 4️⃣ Realtime sync listener
-    tasks.map().on((task, id) => {
-      if (!task || document.getElementById(id)) return;
+      const taskList = document.getElementById("taskList");
+      const input = document.getElementById("taskInput");
 
-      const li = document.createElement("li");
-      li.id = id;
-      li.textContent = task.text;
+      // 3️⃣ Add task
+      function addTask() {
+        if (!input.value.trim()) return;
 
-      const del = document.createElement("button");
-      del.textContent = "❌";
-      del.onclick = () => {
-        gun.get(id).put(null);
-        li.remove();
-      };
+        tasks.set({
+          text: input.value,
+          createdAt: Date.now(),
+        });
 
-      li.appendChild(del);
-      taskList.appendChild(li);
-    });
-  </script>
-</body>
+        input.value = "";
+      }
+
+      // 4️⃣ Realtime sync listener
+      tasks.map().on((task, id) => {
+        if (!task || document.getElementById(id)) return;
+
+        const li = document.createElement("li");
+        li.id = id;
+        li.textContent = task.text;
+
+        const del = document.createElement("button");
+        del.textContent = "❌";
+        del.onclick = () => {
+          gun.get(id).put(null);
+          li.remove();
+        };
+
+        li.appendChild(del);
+        taskList.appendChild(li);
+      });
+    </script>
+  </body>
 </html>
