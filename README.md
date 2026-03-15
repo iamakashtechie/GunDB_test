@@ -3,14 +3,14 @@
 Minimal local-first GunDB demo: a decentralized to-do (tasks) app that syncs peer-to-peer via a local relay.
 
 ## Overview
-- Client-only app (index.html) uses GunDB.
-- A lightweight relay server (Gun relay server/server.js) is used for peer discovery and message routing.
+-- Client-only app (`client/index.html`) uses GunDB.
+-- A lightweight relay server (`server/server.js`) is used for peer discovery and message routing.
 - Designed for local testing: run the relay locally and open the frontend in two different browsers to verify syncing.
 
 ## Repo layout
-- index.html — frontend app (tasks, UI, Gun init)
-- Gun relay server/server.js — minimal Gun relay (Node.js)
-- Discussion_About_Project.md — project notes
+- client/index.html — frontend app (tasks, UI, Gun init)
+- server/server.js — minimal Gun relay (Node.js)
+- client/Discussion_About_Project.md — project notes
 
 ## Prerequisites
 - Node.js (16+ recommended)
@@ -28,7 +28,7 @@ npm install gun
 
 2. Start the relay:
 ```sh
-node "Gun relay server/server.js"
+node "server/server.js"
 # default port: 8765 (or set PORT env)
 ```
 
@@ -56,5 +56,5 @@ Open http://localhost:8000/index.html in Browser A and Browser B — add tasks a
 - The relay only assists discovery/routing — it does not own your data.
 
 ## Next steps / tips
-- Add an npm script (e.g., `"start-relay": "node 'Gun relay server/server.js'"`) for convenience.
+- Add an npm script (e.g., `"start-relay": "node 'server/server.js'"`) for convenience.
 - For demo/portfolio, consider deploying the relay to Render or Railway and configuring multiple peers for resilience.

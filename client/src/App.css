@@ -1,0 +1,10 @@
+/* === App Shell Layout === */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}

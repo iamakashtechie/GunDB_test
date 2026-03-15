@@ -1,0 +1,120 @@
+.connect-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 16px;
+}
+
+.connect-card {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--border);
+  padding: 32px 24px;
+}
+
+.connect-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--accent);
+}
+
+.title-prefix {
+  color: var(--text-dim);
+}
+
+.connect-subtitle {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  margin: 0 0 28px;
+}
+
+.connect-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-label {
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.field input {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.field input:focus {
+  border-color: var(--accent);
+}
+
+.field input::placeholder {
+  color: var(--text-dim);
+  opacity: 0.5;
+}
+
+.field input:disabled {
+  opacity: 0.5;
+}
+
+.connect-error {
+  color: var(--error);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.connect-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 4px;
+}
+
+.connect-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.connect-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.connect-footer {
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  text-align: center;
+  margin: 24px 0 0;
+  opacity: 0.6;
+}
+
+@media (max-width: 480px) {
+  .connect-card {
+    padding: 24px 16px;
+  }
+
+  .connect-title {
+    font-size: 1.3rem;
+  }
+}
